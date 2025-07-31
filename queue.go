@@ -59,15 +59,26 @@ func (q *Queue) Insert(params ...int) error {
 			Priority: priority,
 		}
 
+		if q.Head == nil {
+			q.Tail = node
+			q.Head = node
+			return nil
+		}
+
+
 		if q.Tail.Priority <= priority {
 			node.Next = q.Tail
 			q.Tail = node
 			return nil
 		}
 
-		for cur.Next != nil {
-			if cur.Priority > priority {
-				// keep traversing the queue
+		for {
+			if cur == q.Head {
+				cur.Next = node
+				q.Head = node
+				break
+			}
+			if priority < cur.Next.Priority {
 				cur = cur.Next
 			} else {
 				temp := cur.Next
