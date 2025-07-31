@@ -112,3 +112,39 @@ func (q *Queue) Insert(params ...int) error {
 	}
 
 }
+
+
+
+func (q *Queue) Dequeue() (int, error) {
+
+	// remove the value at the head of the queue
+
+	if q.Head == nil {
+		return 0, errors.New("Queue is empty")
+	} else {
+
+		v := q.Head.Value
+
+		if q.Tail == q.Head {
+			q.Tail = nil
+			q.Head = nil
+			return v, nil
+		}
+
+
+		cur := q.Tail
+
+		for {
+			if cur.Next == q.Head {
+				cur.Next = nil
+				q.Head = cur
+				break
+			}
+			cur = cur.Next
+		}
+
+		return v, nil
+	}
+
+}
+
