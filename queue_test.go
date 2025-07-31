@@ -31,10 +31,19 @@ func TestInitQueue(t *testing.T) {
 
 }
 
-func TestInsert(t *testing.T) {
+func TestInsertEqualPriority(t *testing.T) {
 
 
-	
+	var queue *Queue
 
+	queue = InitQueue()
+
+	queue.Insert(5)
+	queue.Insert(6)
+	queue.Insert(7)
+	queue.Insert(8)
+
+
+	queue.PrintQueue()
 
 }

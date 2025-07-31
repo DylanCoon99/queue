@@ -1,6 +1,10 @@
 package queue
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+	"strconv"
+)
 
 type Node struct {
 	Value    int
@@ -20,8 +24,6 @@ func InitQueue() *Queue {
 	}
 }
 
-
-
 func (q *Queue) PrintQueue() {
 
 	output_string := ""
@@ -40,8 +42,6 @@ func (q *Queue) PrintQueue() {
 	fmt.Println(output_string)
 }
 
-
-
 // Note: 1 is highest priority, higher numbers are lower
 
 func (q *Queue) Insert(params ...int) error {
@@ -59,6 +59,12 @@ func (q *Queue) Insert(params ...int) error {
 			Priority: priority,
 		}
 
+		if q.Tail.Priority <= priority {
+			node.Next = q.Tail
+			q.Tail = node
+			return nil
+		}
+
 		for cur.Next != nil {
 			if cur.Priority > priority {
 				// keep traversing the queue
@@ -70,9 +76,6 @@ func (q *Queue) Insert(params ...int) error {
 				break
 			}
 		}
-
-
-		// have to update the Tail
 
 		return nil
 	} else if len(params) == 1 {
@@ -90,7 +93,6 @@ func (q *Queue) Insert(params ...int) error {
 		}
 
 		node.Next = q.Tail
-
 
 		q.Tail = node
 		return nil
